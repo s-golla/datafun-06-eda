@@ -1,77 +1,62 @@
+
 # datafun-06-eda
 
-A small exploratory data analysis (EDA) project created for the DataFun course series.
+A compact, reproducible exploratory data analysis (EDA) project focused on historical health-care spending and life expectancy across countries. The analysis is implemented as a Jupyter notebook (`sgolla_eda.ipynb`) and uses the dataset `healthexp.csv` included in the repository.
 
-This repository contains code, notes, and artifacts used to explore, clean, and visualize the dataset used in the course assignments. The goal is to demonstrate good EDA practices: data loading, cleaning, summary statistics, visualizations, and short write-ups of findings.
+This README explains how to set up the environment, run the notebook, and reproduce the figures and analyses.
 
-## Table of contents
+## Contents
 
-- Project overview
-- Getting started
-- Data
-- Notebooks & scripts
-- Results & figures
-- Reproducibility
-- Contributing
-- License & contact
+- `healthexp.csv` — dataset used for the analyses (per-capita spending and life expectancy by year and country)
+- `sgolla_eda.ipynb` — the main EDA notebook (data loading, diagnostics, visualizations, regression)
+- `requirements.txt` — Python dependencies (install into a virtual environment)
 
-## Project overview
+## Project summary
 
-This repository is intended as a lightweight EDA workspace. Typical contents you may find (or add) here:
+Goal: explore the relationship between per-capita health spending (`Spending_USD`) and average life expectancy (`Life_Expectancy`) over time and across countries. The notebook contains both static (Matplotlib/Seaborn) and interactive (Plotly) visualizations and a basic OLS regression analysis.
 
-- Jupyter notebooks with step-by-step exploration
-- Python scripts to run specific analyses or generate figures
-- A `requirements.txt` file listing Python dependencies
-- A `data/` directory (gitignored) or instructions to download the datasets
+## Quick start (Windows PowerShell)
 
-If you are a student following along with the course, use the notebooks to reproduce the analyses and modify them to explore your own hypotheses.
-
-### Project goal
-
-The primary goal of this project is to analyze historical health-care spending and life expectancy trends across multiple countries. Using `healthexp.csv`, we will explore relationships between per-capita health spending (in USD) and life expectancy over time, identify patterns across countries, and create visualizations that summarize key findings.
-
-## Getting started
-
-Prerequisites
-
-- Python 3.8+ recommended
-- Git (to clone the repository)
-
-Quick start (Windows PowerShell)
+1. Clone the repository (if needed) and change into the project directory:
 
 ```powershell
-# clone the repo (if you haven't already)
 git clone <repo-url>
 cd datafun-06-eda
+```
 
-# create and activate a virtual environment
-python -m venv .venv; .\.venv\Scripts\Activate.ps1
+2. Create and activate a virtual environment named `.venv` (PowerShell):
 
-# install dependencies
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+3. Install required packages:
+
+```powershell
 pip install -r requirements.txt
+```
 
-# open JupyterLab / Notebook
+4. Start JupyterLab / Notebook and open `sgolla_eda.ipynb`:
+
+```powershell
 jupyter lab
 ```
 
-Replace <repo-url> with your repository URL (for example the origin you cloned from).
+Notes:
+- If you encounter permission issues when activating the virtual environment on Windows, run `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force` in an elevated PowerShell (follow your local IT/security rules).
+- If `requirements.txt` is missing or incomplete, install `pandas numpy matplotlib seaborn plotly statsmodels`.
 
 ## Data
 
-This project does not include large raw datasets in the repository. Place data files under a `data/` directory (add this to `.gitignore`) or update the notebooks to point to your local data path. If the course provided a download link, follow the course instructions to fetch the data and put it in `data/`.
+The repository includes `healthexp.csv` with these columns:
 
-When working with sensitive or large data, avoid committing it to git. Instead, include a small sample or a data schema and the download script.
-
-### Dataset
-
-Included in this repository is a CSV file named [healthexp.csv](https://github.com/s-golla/datafun-06-eda/blob/main/healthexp.csv). The file contains historical records with the following columns:
-
-- `Year` — calendar year of the observation
+- `Year` — calendar year
 - `Country` — country name
 - `Spending_USD` — per-capita health spending (USD)
 - `Life_Expectancy` — average life expectancy (years)
 
-You can open the file directly in a spreadsheet program or load it in Python / a notebook with pandas:
+Load the data in Python as follows:
 
 ```python
 import pandas as pd
@@ -79,23 +64,12 @@ df = pd.read_csv('healthexp.csv')
 df.head()
 ```
 
-Use this dataset as the primary source for the examples and visualizations in the notebooks.
+## Notebook sections (what's in `sgolla_eda.ipynb`)
 
-## Notebooks & scripts
-
-- `notebooks/` — place Jupyter notebooks here (e.g., `01-exploration.ipynb`, `02-cleaning.ipynb`).
-- `src/` — reusable Python modules and analysis scripts.
-- `scripts/` — convenience scripts to reproduce figures or run the pipeline.
-
-Open the notebooks in JupyterLab and run them in order. Cells that read data assume the `data/` path is relative to the repository root.
-
-## Results & figures
-
-Generated figures and short write-ups can be committed to a `results/` or `figures/` directory. Use descriptive filenames and include a brief caption in the notebook or an accompanying `RESULTS.md`.
-
-## Reproducibility
-
-- Python version: 3.8+ (specify in your environment)
-- Dependencies: see `requirements.txt`
-- To ensure reproducible outputs, pin package versions in `requirements.txt` and document the random seeds used in notebooks.
+1. Imports and settings — sets plotting defaults and imports libraries.
+2. Load the dataset — reads `healthexp.csv` into `df` and shows head/dtypes/summary.
+3. Quick checks — missing values, unique countries, year range, and sample pivots.
+4. Static visualizations — Matplotlib/Seaborn plots (time series, scatter, heatmap).
+5. Interactive visualizations — Plotly line and scatter charts for exploration.
+6. Regression analysis — OLS model (Life_Expectancy ~ Spending_USD) with diagnostics.
 
