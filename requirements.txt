@@ -3,3 +3,5 @@ pandas
 pyarrow
 matplotlib
 seaborn
+plotly
+statsmodels
